@@ -29,7 +29,7 @@ module SalesforceBulkApi
       if !@external_field.nil?
         xml += "<externalIdFieldName>#{@external_field}</externalIdFieldName>"
       end
-      xml += "<concurrencyMode>Parallel</concurrencyMode>"
+      xml += "<concurrencyMode>Serial</concurrencyMode>"
       xml += "<contentType>XML</contentType>"
       xml += "</jobInfo>"
       path = "job"
@@ -135,7 +135,7 @@ module SalesforceBulkApi
           sobject_xml += build_sobject(r[k])
           sobject_xml += "</#{k}>"
         elsif k.to_s.include? '.'
-          sobject_xml += build_relationship_sobject(k, r[k])          
+          sobject_xml += build_relationship_sobject(k, r[k])
         elsif !r[k].to_s.empty?
           sobject_xml += "<#{k}>"
           if r[k].respond_to?(:encode)
